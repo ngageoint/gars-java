@@ -18,7 +18,7 @@ public class GARS {
 	 * GARS string pattern
 	 */
 	private static final Pattern garsPattern = Pattern.compile(
-			"^(\\d{3})([A-HJ-NP-Z]{2})(?:([1-4])([1-9]?))?",
+			"^(\\d{3})([A-HJ-NP-Z]{2})(?:([1-4])([1-9])?)?",
 			Pattern.CASE_INSENSITIVE);
 
 	/**
