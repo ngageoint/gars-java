@@ -248,4 +248,155 @@ public class GARSUtils {
 				|| letter == GARSConstants.BAND_LETTER_OMIT_O;
 	}
 
+	/**
+	 * Get the latitude band number equivalent to the longitude band (where AA
+	 * is 1 and QZ is 360)
+	 * 
+	 * @param latitudeBand
+	 *            two character latitude band
+	 * @return number band value
+	 */
+	public static int bandValue(String latitudeBand) {
+		String latitude = latitudeBand.toUpperCase();
+		int latitude1 = bandValue(latitude.charAt(0));
+		int latitude2 = bandValue(latitude.charAt(1));
+		return 24 * (latitude1 - 1) + latitude2;
+	}
+
+	/**
+	 * Get the latitude character band number equivalent (where A is 1 and Z is
+	 * 24)
+	 * 
+	 * @param latitudeBand
+	 *            single character from latitude band
+	 * @return number band value
+	 */
+	public static int bandValue(char latitudeBand) {
+		int value = latitudeBand - GARSConstants.MIN_BAND_LETTER + 1;
+		if (latitudeBand > GARSConstants.BAND_LETTER_OMIT_I) {
+			value--;
+			if (latitudeBand > GARSConstants.BAND_LETTER_OMIT_O) {
+				value--;
+			}
+		}
+		return value;
+	}
+
+	/**
+	 * Get the latitude band from the band number (where 1 is AA and 360 is QZ)
+	 * 
+	 * @param bandValue
+	 *            number band value
+	 * @return two character latitude band
+	 */
+	public static String bandLetters(int bandValue) {
+		bandValue -= 1;
+		int latitude1 = bandValue / 24;
+		int latitude2 = bandValue % 24;
+		return String.valueOf(bandLetter(latitude1 + 1))
+				+ bandLetter(latitude2 + 1);
+	}
+
+	/**
+	 * Get the latitude character equivalent from the band number (where 1 is A
+	 * and 24 is Z)
+	 * 
+	 * @param bandValue
+	 *            number band value
+	 * @return single character of latitude band
+	 */
+	public static char bandLetter(int bandValue) {
+		char letter = GARSConstants.MIN_BAND_LETTER;
+		letter += bandValue - 1;
+		if (letter >= GARSConstants.BAND_LETTER_OMIT_I) {
+			letter++;
+			if (letter >= GARSConstants.BAND_LETTER_OMIT_O) {
+				letter++;
+			}
+		}
+		return letter;
+	}
+
+	/**
+	 * Get the quadrant southwest origin 0 indexed column
+	 * 
+	 * @param quadrant
+	 *            quadrant number
+	 * @return 0 for quadrants 1|3, 1 for quadrants 2|4
+	 */
+	public static int quadrantColumn(int quadrant) {
+		return quadrant % 2 == 0 ? 1 : 0;
+	}
+
+	/**
+	 * Get the quadrant southwest origin 0 indexed row
+	 * 
+	 * @param quadrant
+	 *            quadrant number
+	 * @return 0 for quadrants 3|4, 1 for quadrants 1|2
+	 */
+	public static int quadrantRow(int quadrant) {
+		return quadrant >= 3 ? 0 : 1;
+	}
+
+	/**
+	 * Get the keypad southwest origin 0 indexed column
+	 * 
+	 * @param keypad
+	 *            keypad number
+	 * @return 0 for keypads 1|4|7, 1 for keypads 2|5|8, 2 for keypads 3|6|9
+	 */
+	public static int keypadColumn(int keypad) {
+		int column = 0;
+		if (keypad % 3 == 0) {
+			column = 2;
+		} else if ((keypad + 1) % 3 == 0) {
+			column = 1;
+		}
+		return column;
+	}
+
+	/**
+	 * Get the keypad southwest origin 0 indexed row
+	 * 
+	 * @param keypad
+	 *            keypad number
+	 * @return 0 for keypads 7|8|9, 1 for keypads 4|5|6, 2 for keypads 1|2|3
+	 */
+	public static int keypadRow(int keypad) {
+		int row = 0;
+		if (keypad <= 3) {
+			row = 2;
+		} else if (keypad <= 6) {
+			row = 1;
+		}
+		return row;
+	}
+
+	/**
+	 * Get the quadrant from the southwest origin 0 indexed column and row
+	 * 
+	 * @param column
+	 *            0 indexed column
+	 * @param row
+	 *            0 indexed row
+	 * @return quadrant
+	 */
+	public static int quadrant(int column, int row) {
+		return (1 - row) * 2 + column + 1;
+	}
+
+	/**
+	 * Get the keypad from the southwest origin 0 indexed column and row
+	 * 
+	 * @param column
+	 *            0 indexed column
+	 * @param row
+	 *            0 indexed row
+	 * @return keypad
+	 */
+	public static int keypad(int column, int row) {
+		return (2 - row) * 3 + column + 1;
+	}
+
 }
