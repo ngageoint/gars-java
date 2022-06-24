@@ -135,7 +135,7 @@ public class GARS {
 		StringBuilder gars = new StringBuilder();
 
 		if (type == null) {
-			type = GridType.FIFTEEN_MINUTE;
+			type = GridType.FIVE_MINUTE;
 		}
 
 		gars.append(String.format("%03d", longitude));
@@ -273,6 +273,7 @@ public class GARS {
 	 * @return GARS
 	 */
 	public static GARS from(Point point) {
+		point = point.toDegrees();
 		return from(point.getLongitude(), point.getLatitude());
 	}
 
