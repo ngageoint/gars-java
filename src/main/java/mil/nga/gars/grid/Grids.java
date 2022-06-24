@@ -121,6 +121,7 @@ public class Grids {
 		createGrid(GridType.TWENTY_DEGREE, styles, enabled, new GridLabeler());
 		createGrid(GridType.TEN_DEGREE, styles, enabled, new GridLabeler());
 		createGrid(GridType.FIVE_DEGREE, styles, enabled, new GridLabeler());
+		createGrid(GridType.ONE_DEGREE, styles, enabled, new GridLabeler());
 		createGrid(GridType.THIRTY_MINUTE, styles, enabled, new GridLabeler());
 		createGrid(GridType.FIFTEEN_MINUTE, styles, enabled, new GridLabeler());
 		createGrid(GridType.FIVE_MINUTE, styles, enabled, new GridLabeler());
@@ -225,6 +226,9 @@ public class Grids {
 		}
 		if (precision < GridType.FIVE_DEGREE.getPrecision()) {
 			loadGridStyle(grid, styles, gridKey, GridType.FIVE_DEGREE);
+		}
+		if (precision < GridType.ONE_DEGREE.getPrecision()) {
+			loadGridStyle(grid, styles, gridKey, GridType.ONE_DEGREE);
 		}
 		if (precision < GridType.THIRTY_MINUTE.getPrecision()) {
 			loadGridStyle(grid, styles, gridKey, GridType.THIRTY_MINUTE);

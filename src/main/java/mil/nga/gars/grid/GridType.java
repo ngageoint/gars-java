@@ -23,6 +23,11 @@ public enum GridType {
 	FIVE_DEGREE(5.0),
 
 	/**
+	 * One Degree
+	 */
+	ONE_DEGREE(1.0),
+
+	/**
 	 * Thirty Minute
 	 */
 	THIRTY_MINUTE(0.5),
@@ -76,6 +81,8 @@ public enum GridType {
 			precision = TEN_DEGREE;
 		} else if (value % FIVE_DEGREE.precision == 0) {
 			precision = FIVE_DEGREE;
+		} else if (value % ONE_DEGREE.precision == 0) {
+			precision = ONE_DEGREE;
 		} else if (value % THIRTY_MINUTE.precision == 0) {
 			precision = THIRTY_MINUTE;
 		} else if (value % FIFTEEN_MINUTE.precision == 0) {

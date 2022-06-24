@@ -394,6 +394,8 @@ public class GARSTest {
 		assertEquals(value.substring(0, 5),
 				gars.coordinate(GridType.FIVE_DEGREE));
 		assertEquals(value.substring(0, 5),
+				gars.coordinate(GridType.ONE_DEGREE));
+		assertEquals(value.substring(0, 5),
 				gars.coordinate(GridType.THIRTY_MINUTE));
 		assertEquals(value.substring(0, 6),
 				gars.coordinate(GridType.FIFTEEN_MINUTE));
