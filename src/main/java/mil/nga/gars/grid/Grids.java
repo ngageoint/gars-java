@@ -118,12 +118,12 @@ public class Grids {
 			styles = new HashMap<>();
 		}
 
-		createGrid(GridType.TWENTY_DEGREE, styles, enabled, null);
-		createGrid(GridType.TEN_DEGREE, styles, enabled, null);
-		createGrid(GridType.FIVE_DEGREE, styles, enabled, null);
-		createGrid(GridType.THIRTY_MINUTE, styles, enabled, null);
-		createGrid(GridType.FIFTEEN_MINUTE, styles, enabled, null);
-		createGrid(GridType.FIVE_MINUTE, styles, enabled, null);
+		createGrid(GridType.TWENTY_DEGREE, styles, enabled, new GridLabeler());
+		createGrid(GridType.TEN_DEGREE, styles, enabled, new GridLabeler());
+		createGrid(GridType.FIVE_DEGREE, styles, enabled, new GridLabeler());
+		createGrid(GridType.THIRTY_MINUTE, styles, enabled, new GridLabeler());
+		createGrid(GridType.FIFTEEN_MINUTE, styles, enabled, new GridLabeler());
+		createGrid(GridType.FIVE_MINUTE, styles, enabled, new GridLabeler());
 
 	}
 
