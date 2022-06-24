@@ -3,6 +3,7 @@ package mil.nga.gars.tile;
 import mil.nga.gars.GARSUtils;
 import mil.nga.gars.features.Bounds;
 import mil.nga.gars.features.Point;
+import mil.nga.gars.features.Unit;
 
 /**
  * Global Area Reference System Tile
@@ -138,6 +139,35 @@ public class GARSTile {
 	 */
 	public Bounds getBounds() {
 		return bounds;
+	}
+
+	/**
+	 * Get the bounds in the units
+	 * 
+	 * @param unit
+	 *            units
+	 * @return bounds in units
+	 */
+	public Bounds getBounds(Unit unit) {
+		return bounds.toUnit(unit);
+	}
+
+	/**
+	 * Get the bounds in degrees
+	 * 
+	 * @return bounds in degrees
+	 */
+	public Bounds getBoundsDegrees() {
+		return getBounds(Unit.DEGREE);
+	}
+
+	/**
+	 * Get the bounds in meters
+	 * 
+	 * @return bounds in meters
+	 */
+	public Bounds getBoundsMeters() {
+		return getBounds(Unit.METER);
 	}
 
 	/**
