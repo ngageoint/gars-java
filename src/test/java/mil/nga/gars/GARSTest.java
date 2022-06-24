@@ -9,6 +9,7 @@ import java.text.ParseException;
 import org.junit.Test;
 
 import mil.nga.gars.features.Point;
+import mil.nga.gars.grid.GridType;
 
 /**
  * GARS Test
@@ -233,6 +234,119 @@ public class GARSTest {
 		assertFalse(GARS.isGARS("006AG59"));
 		assertFalse(GARS.isGARS("006AG30"));
 		assertFalse(GARS.isGARS("006AG310"));
+
+	}
+
+	/**
+	 * Test parsing a MGRS string value
+	 * 
+	 * @throws ParseException
+	 *             upon failure to parse
+	 */
+	@Test
+	public void testCoordinate() throws ParseException {
+
+		String gars = "419NV11";
+		testCoordinate(29.06757, 63.98863, gars);
+		testCoordinateMeters(3235787.09, 9346877.48, gars);
+
+		gars = "468JN14";
+		testCoordinate(53.51, 12.40, gars);
+		testCoordinateMeters(5956705.95, 1391265.16, gars);
+
+		gars = "045KG17";
+		testCoordinate(-157.916861, 21.309444, gars);
+		testCoordinateMeters(-17579224.55, 2428814.96, gars);
+
+		gars = "395JE45";
+		testCoordinate(17.3714337, 8.1258235, gars);
+		testCoordinateMeters(1933779.15, 907610.20, gars);
+
+		gars = "204LQ37";
+		testCoordinate(-78.5, 37.0, gars);
+		testCoordinateMeters(-8738580.027271975, 4439106.787250587, gars);
+
+		gars = "204LQ27";
+		testCoordinate(Point.create(-78.25, 37.25), gars);
+		testCoordinateMeters(-8710750.154573657, 4474011.088229478, gars);
+
+		gars = "204LQ25";
+		testCoordinate(-78.16666666, 37.33333334, gars);
+		testCoordinateMeters(-8701473.529598756, 4485671.563830873, gars);
+
+		gars = "204LQ23";
+		testCoordinate(-78.08333333, 37.41666667, gars);
+		testCoordinateMeters(-8692196.905737048, 4497344.980476594, gars);
+
+	}
+
+	/**
+	 * Test the WGS84 coordinate with expected GARS coordinate
+	 * 
+	 * @param longitude
+	 *            longitude in degrees
+	 * @param latitude
+	 *            latitude in degrees
+	 * @param value
+	 *            GARS value
+	 * @throws ParseException
+	 *             upon failure to parse
+	 */
+	private void testCoordinate(double longitude, double latitude, String value)
+			throws ParseException {
+		Point point = Point.create(longitude, latitude);
+		testCoordinate(point, value);
+		testCoordinate(point.toMeters(), value);
+	}
+
+	/**
+	 * Test the WGS84 coordinate with expected GARS coordinate
+	 * 
+	 * @param longitude
+	 *            longitude in degrees
+	 * @param latitude
+	 *            latitude in degrees
+	 * @param value
+	 *            GARS value
+	 * @throws ParseException
+	 *             upon failure to parse
+	 */
+	private void testCoordinateMeters(double longitude, double latitude,
+			String value) throws ParseException {
+		Point point = Point.meters(longitude, latitude);
+		testCoordinate(point, value);
+		testCoordinate(point.toDegrees(), value);
+	}
+
+	/**
+	 * Test the coordinate with expected GARS coordinate
+	 * 
+	 * @param point
+	 *            point
+	 * @param value
+	 *            GARS value
+	 * @throws ParseException
+	 *             upon failure to parse
+	 */
+	private void testCoordinate(Point point, String value)
+			throws ParseException {
+
+		GARS gars = point.toGARS();
+		assertEquals(value, gars.toString());
+		assertEquals(value, gars.coordinate());
+		assertEquals(value, gars.coordinate(GridType.FIVE_MINUTE));
+		assertEquals(value, gars.coordinate(null));
+
+		assertEquals(value.substring(0, 5),
+				gars.coordinate(GridType.TWENTY_DEGREE));
+		assertEquals(value.substring(0, 5),
+				gars.coordinate(GridType.TEN_DEGREE));
+		assertEquals(value.substring(0, 5),
+				gars.coordinate(GridType.FIVE_DEGREE));
+		assertEquals(value.substring(0, 5),
+				gars.coordinate(GridType.THIRTY_MINUTE));
+		assertEquals(value.substring(0, 6),
+				gars.coordinate(GridType.FIFTEEN_MINUTE));
 
 	}
 
