@@ -239,7 +239,7 @@ public class GARSTest {
 	}
 
 	/**
-	 * Test parsing a MGRS string value
+	 * Test parsing a GARS string value
 	 * 
 	 * @throws ParseException
 	 *             upon failure to parse
