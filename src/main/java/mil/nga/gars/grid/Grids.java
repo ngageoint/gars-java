@@ -1284,7 +1284,7 @@ public class Grids {
 	}
 
 	/**
-	 * Set all label grid zone edge buffers
+	 * Set all label grid edge buffers
 	 * 
 	 * @param buffer
 	 *            label buffer (greater than or equal to 0.0 and less than 0.5)
@@ -1299,7 +1299,7 @@ public class Grids {
 	}
 
 	/**
-	 * Set the label grid zone edge buffer for the grid types
+	 * Set the label grid edge buffer for the grid types
 	 * 
 	 * @param buffer
 	 *            label buffer (greater than or equal to 0.0 and less than 0.5)
@@ -1311,7 +1311,7 @@ public class Grids {
 	}
 
 	/**
-	 * Set the label grid zone edge buffer for the grid types
+	 * Set the label grid edge buffer for the grid types
 	 * 
 	 * @param types
 	 *            grid types
@@ -1325,7 +1325,7 @@ public class Grids {
 	}
 
 	/**
-	 * Get the label grid zone edge buffer
+	 * Get the label grid edge buffer
 	 * 
 	 * @param type
 	 *            grid type
@@ -1336,7 +1336,7 @@ public class Grids {
 	}
 
 	/**
-	 * Set the label grid zone edge buffer
+	 * Set the label grid edge buffer
 	 * 
 	 * @param type
 	 *            grid type

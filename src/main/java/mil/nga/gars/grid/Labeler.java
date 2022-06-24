@@ -54,7 +54,7 @@ public abstract class Labeler {
 	private double textSize;
 
 	/**
-	 * Grid zone edge buffer (greater than or equal to 0.0 and less than 0.5)
+	 * Grid edge buffer (greater than or equal to 0.0 and less than 0.5)
 	 */
 	private double buffer;
 
@@ -105,8 +105,8 @@ public abstract class Labeler {
 	 * @param textSize
 	 *            label text size
 	 * @param buffer
-	 *            grid zone edge buffer (greater than or equal to 0.0 and less
-	 *            than 0.5)
+	 *            grid edge buffer (greater than or equal to 0.0 and less than
+	 *            0.5)
 	 */
 	public Labeler(int minZoom, Color color, double textSize, double buffer) {
 		this(minZoom, null, color, textSize, buffer);
@@ -154,8 +154,8 @@ public abstract class Labeler {
 	 * @param textSize
 	 *            label text size
 	 * @param buffer
-	 *            grid zone edge buffer (greater than or equal to 0.0 and less
-	 *            than 0.5)
+	 *            grid edge buffer (greater than or equal to 0.0 and less than
+	 *            0.5)
 	 */
 	public Labeler(int minZoom, Integer maxZoom, Color color, double textSize,
 			double buffer) {
@@ -211,8 +211,8 @@ public abstract class Labeler {
 	 * @param textSize
 	 *            label text size
 	 * @param buffer
-	 *            grid zone edge buffer (greater than or equal to 0.0 and less
-	 *            than 0.5)
+	 *            grid edge buffer (greater than or equal to 0.0 and less than
+	 *            0.5)
 	 */
 	public Labeler(boolean enabled, int minZoom, Integer maxZoom, Color color,
 			double textSize, double buffer) {
@@ -351,7 +351,7 @@ public abstract class Labeler {
 	}
 
 	/**
-	 * Get the grid zone edge buffer
+	 * Get the grid edge buffer
 	 * 
 	 * @return buffer (greater than or equal to 0.0 and less than 0.5)
 	 */
@@ -360,7 +360,7 @@ public abstract class Labeler {
 	}
 
 	/**
-	 * Set the grid zone edge buffer
+	 * Set the grid edge buffer
 	 * 
 	 * @param buffer
 	 *            buffer (greater than or equal to 0.0 and less than 0.5)
@@ -368,7 +368,7 @@ public abstract class Labeler {
 	public void setBuffer(double buffer) {
 		if (buffer < 0.0 || buffer >= 0.5) {
 			throw new IllegalArgumentException(
-					"Grid zone edge buffer must be >= 0 and < 0.5. buffer: "
+					"Grid edge buffer must be >= 0 and < 0.5. buffer: "
 							+ buffer);
 		}
 		this.buffer = buffer;

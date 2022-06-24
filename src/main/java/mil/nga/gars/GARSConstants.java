@@ -43,6 +43,16 @@ public class GARSConstants {
 	public static final int MAX_BAND_NUMBER = 720;
 
 	/**
+	 * Minimum grid latitude band letters
+	 */
+	public static final String MIN_BAND_LETTERS = "AA";
+
+	/**
+	 * Maximum grid latitude band letters
+	 */
+	public static final String MAX_BAND_LETTERS = "QZ";
+
+	/**
 	 * Minimum grid latitude single band letter
 	 */
 	public static final char MIN_BAND_LETTER = 'A';
@@ -53,6 +63,16 @@ public class GARSConstants {
 	public static final char MAX_BAND_LETTER = 'Z';
 
 	/**
+	 * Minimum grid latitude band letters number equivalent
+	 */
+	public static final int MIN_BAND_LETTERS_NUMBER = 1;
+
+	/**
+	 * Maximum grid latitude band letters number equivalent
+	 */
+	public static final int MAX_BAND_LETTERS_NUMBER = 360;
+
+	/**
 	 * Default quadrant (southwest corner)
 	 */
 	public static final int DEFAULT_QUADRANT = 3;
@@ -61,21 +81,6 @@ public class GARSConstants {
 	 * Default keypad (southwest corner)
 	 */
 	public static final int DEFAULT_KEYPAD = 7;
-
-	/**
-	 * Grid band width and height in degrees
-	 */
-	public static final double BAND_DEGREES = 0.5;
-
-	/**
-	 * Quadrant width and height in degrees
-	 */
-	public static final double QUADRANT_DEGREES = 0.25;
-
-	/**
-	 * Keypad width and height in degrees
-	 */
-	public static final double KEYPAD_DEGREES = QUADRANT_DEGREES / 3.0;
 
 	/**
 	 * Omitted band letter 'I'

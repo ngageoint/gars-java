@@ -3,6 +3,10 @@ package mil.nga.gars;
 import mil.nga.gars.features.Bounds;
 import mil.nga.gars.features.Point;
 import mil.nga.gars.features.Unit;
+import mil.nga.gars.grid.BandLettersRange;
+import mil.nga.gars.grid.BandNumberRange;
+import mil.nga.gars.grid.GridRange;
+import mil.nga.gars.grid.GridType;
 import mil.nga.gars.tile.Pixel;
 
 /**
@@ -235,6 +239,98 @@ public class GARSUtils {
 	}
 
 	/**
+	 * Get the longitude from the longitude band
+	 * 
+	 * @param band
+	 *            longitudinal band number
+	 * @return longitude
+	 */
+	public static double getLongitude(int band) {
+		return GARSConstants.MIN_LON
+				+ ((band - 1) * GridType.THIRTY_MINUTE.getPrecision());
+	}
+
+	/**
+	 * Get the latitude from the latitude band letters
+	 * 
+	 * @param band
+	 *            latitudinal band letters
+	 * @return latitude
+	 */
+	public static double getLatitude(String band) {
+		return getLatitude(bandValue(band));
+	}
+
+	/**
+	 * Get the latitude from the latitude band letters number equivalent
+	 * 
+	 * @param band
+	 *            latitudinal band number
+	 * @return latitude
+	 */
+	public static double getLatitude(int band) {
+		return GARSConstants.MIN_LAT
+				+ ((band - 1) * GridType.THIRTY_MINUTE.getPrecision());
+	}
+
+	/**
+	 * Get the longitude band from the longitude
+	 * 
+	 * @param longitude
+	 *            longitude
+	 * @return longitude band
+	 */
+	public static int getLongitudeBand(double longitude) {
+		return (int) getLongitudeDecimalBand(longitude);
+	}
+
+	/**
+	 * Get the longitude decimal band from the longitude
+	 * 
+	 * @param longitude
+	 *            longitude
+	 * @return longitude decimal band
+	 */
+	public static double getLongitudeDecimalBand(double longitude) {
+		return ((longitude - GARSConstants.MIN_LON)
+				/ GridType.THIRTY_MINUTE.getPrecision()) + 1.0;
+	}
+
+	/**
+	 * Get the latitude band letters from the latitude
+	 * 
+	 * @param latitude
+	 *            latitude
+	 * @return latitude band letters
+	 */
+	public static String getLatitudeBand(double latitude) {
+		return bandLetters(getLatitudeBandValue(latitude));
+	}
+
+	/**
+	 * Get the latitude band value from the latitude
+	 * 
+	 * @param latitude
+	 *            latitude
+	 * @return latitude band value
+	 */
+	public static int getLatitudeBandValue(double latitude) {
+		return (int) getLatitudeDecimalBandValue(latitude);
+	}
+
+	/**
+	 * Get the latitude decimal band value from the latitude
+	 * 
+	 * @param latitude
+	 *            latitude
+	 * @return latitude decimal band value
+	 */
+	public static double getLatitudeDecimalBandValue(double latitude) {
+		return ((latitude - GARSConstants.MIN_LAT)
+				/ GridType.THIRTY_MINUTE.getPrecision()) + 1.0;
+	}
+
+	/**
 	 * The the band letter an omitted letter
 	 * {@link GARSConstants#BAND_LETTER_OMIT_I} or
 	 * {@link GARSConstants#BAND_LETTER_OMIT_O}
@@ -397,6 +493,104 @@ public class GARSUtils {
 	 */
 	public static int keypad(int column, int row) {
 		return (2 - row) * 3 + column + 1;
+	}
+
+	/**
+	 * Get a grid range from the bounds
+	 * 
+	 * @param bounds
+	 *            bounds
+	 * @return grid range
+	 */
+	public static GridRange getGridRange(Bounds bounds) {
+		bounds = bounds.toDegrees();
+		BandNumberRange bandNumberRange = getBandNumberRange(bounds);
+		BandLettersRange bandLettersRange = getBandLettersRange(bounds);
+		return new GridRange(bandNumberRange, bandLettersRange);
+	}
+
+	/**
+	 * Get a band number range between the western and eastern bounds
+	 * 
+	 * @param bounds
+	 *            bounds
+	 * @return band number range
+	 */
+	public static BandNumberRange getBandNumberRange(Bounds bounds) {
+		bounds = bounds.toDegrees();
+		return getBandNumberRange(bounds.getMinLongitude(),
+				bounds.getMaxLongitude());
+	}
+
+	/**
+	 * Get a band number range between the western and eastern longitudes
+	 * 
+	 * @param west
+	 *            western longitude in degrees
+	 * @param east
+	 *            eastern longitude in degrees
+	 * @return band number range
+	 */
+	public static BandNumberRange getBandNumberRange(double west, double east) {
+		int westBand = getLongitudeBand(west);
+		int eastBand = getLongitudeBand(east);
+		return new BandNumberRange(westBand, eastBand);
+	}
+
+	/**
+	 * Get a band letters range between the southern and northern bounds
+	 * 
+	 * @param bounds
+	 *            bounds
+	 * @return band letters range
+	 */
+	public static BandLettersRange getBandLettersRange(Bounds bounds) {
+		bounds = bounds.toDegrees();
+		return getBandLettersRange(bounds.getMinLatitude(),
+				bounds.getMaxLatitude());
+	}
+
+	/**
+	 * Get a band letters range between the southern and northern latitudes in
+	 * degrees
+	 * 
+	 * @param south
+	 *            southern latitude in degrees
+	 * @param north
+	 *            northern latitude in degrees
+	 * @return band letters range
+	 */
+	public static BandLettersRange getBandLettersRange(double south,
+			double north) {
+		String southBand = getLatitudeBand(south);
+		String northBand = getLatitudeBand(north);
+		return new BandLettersRange(southBand, northBand);
+	}
+
+	/**
+	 * Get the precision degrees value before the degrees value
+	 * 
+	 * @param value
+	 *            value
+	 * @param precision
+	 *            precision in degrees
+	 * @return degrees precision value
+	 */
+	public static double precisionBefore(double value, double precision) {
+		return value - ((value % precision + precision) % precision);
+	}
+
+	/**
+	 * Get the precision degrees value after the degrees value
+	 * 
+	 * @param value
+	 *            value
+	 * @param precision
+	 *            precision in degrees
+	 * @return degrees precision value
+	 */
+	public static double precisionAfter(double value, double precision) {
+		return precisionBefore(value + precision, precision);
 	}
 
 }

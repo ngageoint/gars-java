@@ -61,4 +61,29 @@ public enum GridType {
 		return precision;
 	}
 
+	/**
+	 * Get the precision of the value in degrees
+	 * 
+	 * @param value
+	 *            value in degrees
+	 * @return precision grid type
+	 */
+	public static GridType getPrecision(double value) {
+		GridType precision = null;
+		if (value % TWENTY_DEGREE.precision == 0) {
+			precision = TWENTY_DEGREE;
+		} else if (value % TEN_DEGREE.precision == 0) {
+			precision = TEN_DEGREE;
+		} else if (value % FIVE_DEGREE.precision == 0) {
+			precision = FIVE_DEGREE;
+		} else if (value % THIRTY_MINUTE.precision == 0) {
+			precision = THIRTY_MINUTE;
+		} else if (value % FIFTEEN_MINUTE.precision == 0) {
+			precision = FIFTEEN_MINUTE;
+		} else {
+			precision = FIVE_MINUTE;
+		}
+		return precision;
+	}
+
 }

@@ -9,6 +9,7 @@ import java.text.ParseException;
 import org.junit.Test;
 
 import mil.nga.gars.features.Point;
+import mil.nga.gars.grid.GridRange;
 import mil.nga.gars.grid.GridType;
 
 /**
@@ -278,6 +279,55 @@ public class GARSTest {
 		testCoordinate(-78.08333333, 37.41666667, gars);
 		testCoordinateMeters(-8692196.905737048, 4497344.980476594, gars);
 
+	}
+
+	/**
+	 * Test parsing 30 minute full range
+	 * 
+	 * @throws ParseException
+	 *             upon failure to parse
+	 */
+	@Test
+	public void test30MinuteParse() throws ParseException {
+
+		GridRange gridRange = new GridRange();
+
+		int count = 0;
+
+		int number = GARSConstants.MIN_BAND_NUMBER;
+		int letters = GARSConstants.MIN_BAND_LETTERS_NUMBER;
+		double lon = GARSConstants.MIN_LON;
+		double lat = GARSConstants.MIN_LAT;
+
+		for (GARS gars : gridRange) {
+
+			int bandNumber = gars.getLongitude();
+			String bandLetters = gars.getLatitude();
+
+			assertEquals(number, bandNumber);
+			assertEquals(GARSUtils.bandLetters(letters), bandLetters);
+			assertEquals(GARSConstants.DEFAULT_QUADRANT, gars.getQuadrant());
+			assertEquals(GARSConstants.DEFAULT_KEYPAD, gars.getKeypad());
+
+			Point point = gars.toPoint();
+
+			assertEquals(lon, point.getLongitude(), 0);
+			assertEquals(lat, point.getLatitude(), 0);
+
+			letters++;
+			lat += GridType.THIRTY_MINUTE.getPrecision();
+			if (letters > GARSConstants.MAX_BAND_LETTERS_NUMBER) {
+				letters = GARSConstants.MIN_BAND_LETTERS_NUMBER;
+				lat = GARSConstants.MIN_LAT;
+				number++;
+				lon += GridType.THIRTY_MINUTE.getPrecision();
+			}
+
+			count++;
+		}
+
+		assertEquals(GARSConstants.MAX_BAND_NUMBER
+				* GARSConstants.MAX_BAND_LETTERS_NUMBER, count);
 	}
 
 	/**

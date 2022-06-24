@@ -1,5 +1,6 @@
 package mil.nga.gars.grid;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import mil.nga.gars.color.Color;
 import mil.nga.gars.features.Bounds;
 import mil.nga.gars.features.Line;
+import mil.nga.gars.features.Point;
 import mil.nga.gars.property.GARSProperties;
 import mil.nga.gars.property.PropertyConstants;
 import mil.nga.gars.tile.GARSTile;
@@ -447,7 +449,7 @@ public class Grid implements Comparable<Grid> {
 	}
 
 	/**
-	 * Get the lines for the tile and zone
+	 * Get the lines for the tile
 	 * 
 	 * @param tile
 	 *            tile
@@ -458,7 +460,7 @@ public class Grid implements Comparable<Grid> {
 	}
 
 	/**
-	 * Get the lines for the zoom, tile bounds, and zone
+	 * Get the lines for the zoom and tile bounds
 	 * 
 	 * @param zoom
 	 *            zoom level
@@ -475,19 +477,48 @@ public class Grid implements Comparable<Grid> {
 	}
 
 	/**
-	 * Get the lines for the tile bounds and zone
+	 * Get the lines for the tile bounds
 	 * 
 	 * @param tileBounds
 	 *            tile bounds
 	 * @return lines
 	 */
 	public List<Line> getLines(Bounds tileBounds) {
-		// TODO
-		return null;
+
+		List<Line> lines = new ArrayList<>();
+
+		double precision = getPrecision();
+
+		tileBounds = tileBounds.toPrecision(precision);
+
+		for (double lon = tileBounds.getMinLongitude(); lon <= tileBounds
+				.getMaxLongitude(); lon += precision) {
+
+			GridType verticalPrecision = GridType.getPrecision(lon);
+
+			for (double lat = tileBounds.getMinLatitude(); lat <= tileBounds
+					.getMaxLatitude(); lat += precision) {
+
+				GridType horizontalPrecision = GridType.getPrecision(lat);
+
+				Point southwest = Point.create(lon, lat);
+				Point northwest = Point.create(lon, lat + precision);
+				Point southeast = Point.create(lon + precision, lat);
+
+				// Vertical line
+				lines.add(Line.line(southwest, northwest, verticalPrecision));
+
+				// Horizontal line
+				lines.add(Line.line(southwest, southeast, horizontalPrecision));
+
+			}
+		}
+
+		return lines;
 	}
 
 	/**
-	 * Get the labels for the tile and zone
+	 * Get the labels for the tile
 	 * 
 	 * @param tile
 	 *            tile
@@ -498,7 +529,7 @@ public class Grid implements Comparable<Grid> {
 	}
 
 	/**
-	 * Get the labels for the zoom, tile bounds, and zone
+	 * Get the labels for the zoom and tile bounds
 	 * 
 	 * @param zoom
 	 *            zoom level
@@ -515,7 +546,7 @@ public class Grid implements Comparable<Grid> {
 	}
 
 	/**
-	 * Get the label grid zone edge buffer
+	 * Get the label grid edge buffer
 	 * 
 	 * @return label buffer (greater than or equal to 0.0 and less than 0.5)
 	 */

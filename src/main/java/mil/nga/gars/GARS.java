@@ -42,6 +42,21 @@ public class GARS {
 	private int keypad;
 
 	/**
+	 * Create, default southwest corner quadrant
+	 * ({@link GARSConstants#DEFAULT_QUADRANT}) and keypad
+	 * ({@link GARSConstants#DEFAULT_KEYPAD})
+	 * 
+	 * @param longitude
+	 *            longitudinal band number
+	 * @param latitude
+	 *            latitudinal band letters
+	 * @return GARS
+	 */
+	public static GARS create(int longitude, String latitude) {
+		return new GARS(longitude, latitude);
+	}
+
+	/**
 	 * Create
 	 * 
 	 * @param longitude
@@ -57,6 +72,21 @@ public class GARS {
 	public static GARS create(int longitude, String latitude, int quadrant,
 			int keypad) {
 		return new GARS(longitude, latitude, quadrant, keypad);
+	}
+
+	/**
+	 * Constructor, default southwest corner quadrant
+	 * ({@link GARSConstants#DEFAULT_QUADRANT}) and keypad
+	 * ({@link GARSConstants#DEFAULT_KEYPAD})
+	 * 
+	 * @param longitude
+	 *            longitudinal band number
+	 * @param latitude
+	 *            latitudinal band letters
+	 */
+	public GARS(int longitude, String latitude) {
+		this(longitude, latitude, GARSConstants.DEFAULT_QUADRANT,
+				GARSConstants.DEFAULT_KEYPAD);
 	}
 
 	/**
@@ -163,19 +193,18 @@ public class GARS {
 	 */
 	public Point toPoint() {
 
-		double lon = GARSConstants.MIN_LON
-				+ ((this.longitude - 1) * GARSConstants.BAND_DEGREES);
-
-		int latBand = GARSUtils.bandValue(latitude);
-		double lat = GARSConstants.MIN_LAT
-				+ ((latBand - 1) * GARSConstants.BAND_DEGREES);
+		double lon = GARSUtils.getLongitude(longitude);
+		double lat = GARSUtils.getLatitude(latitude);
 
 		lon += GARSUtils.quadrantColumn(quadrant)
-				* GARSConstants.QUADRANT_DEGREES;
-		lat += GARSUtils.quadrantRow(quadrant) * GARSConstants.QUADRANT_DEGREES;
+				* GridType.FIFTEEN_MINUTE.getPrecision();
+		lat += GARSUtils.quadrantRow(quadrant)
+				* GridType.FIFTEEN_MINUTE.getPrecision();
 
-		lon += GARSUtils.keypadColumn(keypad) * GARSConstants.KEYPAD_DEGREES;
-		lat += GARSUtils.keypadRow(keypad) * GARSConstants.KEYPAD_DEGREES;
+		lon += GARSUtils.keypadColumn(keypad)
+				* GridType.FIVE_MINUTE.getPrecision();
+		lat += GARSUtils.keypadRow(keypad)
+				* GridType.FIVE_MINUTE.getPrecision();
 
 		return new Point(lon, lat);
 	}
@@ -247,8 +276,8 @@ public class GARS {
 			if (matches) {
 				String latitude = matcher.group(2).toUpperCase();
 				int latitudeValue = GARSUtils.bandValue(latitude);
-				matches = latitudeValue >= GARSConstants.MIN_BAND_NUMBER
-						&& latitudeValue <= GARSConstants.MAX_BAND_NUMBER / 2.0;
+				matches = latitudeValue >= GARSConstants.MIN_BAND_LETTERS_NUMBER
+						&& latitudeValue <= GARSConstants.MAX_BAND_LETTERS_NUMBER;
 			}
 		}
 		return matches;
@@ -288,10 +317,8 @@ public class GARS {
 	 */
 	public static GARS from(double longitude, double latitude) {
 
-		double lon = ((longitude - GARSConstants.MIN_LON)
-				/ GARSConstants.BAND_DEGREES) + 1.0;
-		double lat = ((latitude - GARSConstants.MIN_LAT)
-				/ GARSConstants.BAND_DEGREES) + 1.0;
+		double lon = GARSUtils.getLongitudeDecimalBand(longitude);
+		double lat = GARSUtils.getLatitudeDecimalBandValue(latitude);
 
 		int lonInt = (int) lon;
 		int latInt = (int) lat;
@@ -344,8 +371,8 @@ public class GARS {
 
 		String latitude = matcher.group(2).toUpperCase();
 		int latitudeValue = GARSUtils.bandValue(latitude);
-		if (latitudeValue < GARSConstants.MIN_BAND_NUMBER
-				|| latitudeValue > GARSConstants.MAX_BAND_NUMBER / 2.0) {
+		if (latitudeValue < GARSConstants.MIN_BAND_LETTERS_NUMBER
+				|| latitudeValue > GARSConstants.MAX_BAND_LETTERS_NUMBER) {
 			throw new ParseException("Invalid GARS latitude: "
 					+ matcher.group(2) + ", GARS: " + gars, 3);
 		}

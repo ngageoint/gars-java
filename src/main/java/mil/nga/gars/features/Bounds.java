@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mil.nga.gars.GARSUtils;
+import mil.nga.gars.grid.BandLettersRange;
+import mil.nga.gars.grid.BandNumberRange;
+import mil.nga.gars.grid.GridRange;
 import mil.nga.gars.tile.GARSTile;
 import mil.nga.gars.tile.Pixel;
 import mil.nga.gars.tile.PixelRange;
@@ -551,6 +554,30 @@ public class Bounds {
 	}
 
 	/**
+	 * Convert the bounds to be precision accurate minimally containing the
+	 * bounds. Each bound is equal to or larger by the precision degree amount.
+	 * 
+	 * @param precision
+	 *            precision in degrees
+	 * @return precision bounds
+	 */
+	public Bounds toPrecision(double precision) {
+
+		Bounds bounds = toDegrees();
+
+		double minLon = GARSUtils.precisionBefore(bounds.getMinLongitude(),
+				precision);
+		double minLat = GARSUtils.precisionBefore(bounds.getMinLatitude(),
+				precision);
+		double maxLon = GARSUtils.precisionAfter(bounds.getMaxLongitude(),
+				precision);
+		double maxLat = GARSUtils.precisionAfter(bounds.getMaxLatitude(),
+				precision);
+
+		return Bounds.degrees(minLon, minLat, maxLon, maxLat);
+	}
+
+	/**
 	 * Get the pixel range where the bounds fit into the tile
 	 * 
 	 * @param tile
@@ -601,6 +628,33 @@ public class Bounds {
 		lines.add(Line.line(southeast, southwest));
 
 		return lines;
+	}
+
+	/**
+	 * Get a grid range of the bounds
+	 * 
+	 * @return grid range
+	 */
+	public GridRange getGridRange() {
+		return GARSUtils.getGridRange(this);
+	}
+
+	/**
+	 * Get a band number range between the western and eastern longitudes
+	 * 
+	 * @return band number range
+	 */
+	public BandNumberRange getBandNumberRange() {
+		return GARSUtils.getBandNumberRange(this);
+	}
+
+	/**
+	 * Get a band letters range between the southern and northern latitudes
+	 * 
+	 * @return band letters range
+	 */
+	public BandLettersRange getBandLettersRange() {
+		return GARSUtils.getBandLettersRange(this);
 	}
 
 }
