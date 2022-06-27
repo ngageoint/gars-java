@@ -21,7 +21,18 @@ View the latest [Javadoc](http://ngageoint.github.io/gars-java/docs/api/)
 
 ```java
 
-// TODO
+GARS gars = GARS.parse("006AG39");
+Point point = gars.toPoint();
+Point pointMeters = point.toMeters();
+
+double latitude = 63.98862388;
+double longitude = 29.06755082;
+Point point2 = Point.create(longitude, latitude);
+GARS gars2 = point2.toGARS();
+String garsCoordinate = gars2.toString();
+String gars30m = gars2.coordinate(GridType.THIRTY_MINUTE);
+String gars15m = gars2.coordinate(GridType.FIFTEEN_MINUTE);
+String gars5m = gars2.coordinate(GridType.FIVE_MINUTE);
 
 ```
 
@@ -31,13 +42,42 @@ See [gars-android](https://github.com/ngageoint/gars-android) for a concrete exa
 
 ```java
 
-// TODO
+// GARSTile tile = ...;
+
+Grids grids = Grids.create();
+
+ZoomGrids zoomGrids = grids.getGrids(tile.getZoom());
+if (zoomGrids.hasGrids()) {
+
+  for (Grid grid : zoomGrids) {
+
+    List<Line> lines = grid.getLines(tile);
+    if (lines != null) {
+      for (Line line : lines) {
+        Pixel pixel1 = line.getPoint1().getPixel(tile);
+        Pixel pixel2 = line.getPoint2().getPixel(tile);
+        // Draw line
+      }
+    }
+
+    List<Label> labels = grid.getLabels(tile);
+    if (labels != null) {
+      for (Label label : labels) {
+        PixelRange pixelRange = label.getBounds()
+            .getPixelRange(tile);
+        Pixel centerPixel = label.getCenter().getPixel(tile);
+        // Draw label
+      }
+    }
+
+  }
+}
 
 ```
 
 #### Properties ####
 
-TODO
+Default grid properties including zoom ranges, styles, and labelers are defined in [gars.properties](https://github.com/ngageoint/gars-java/blob/master/src/main/resources/gars.properties). The defaults can be changed in code by modifying the [Grids](https://github.com/ngageoint/gars-java/blob/master/src/main/java/mil/nga/gars/grid/Grids.java).
 
 ### Installation ###
 
