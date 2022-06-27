@@ -577,7 +577,13 @@ public class GARSUtils {
 	 * @return degrees precision value
 	 */
 	public static double precisionBefore(double value, double precision) {
-		return value - ((value % precision + precision) % precision);
+		double before = 0.0;
+		if (Math.abs(value) >= precision) {
+			before = value - ((value % precision + precision) % precision);
+		} else if (value < 0.0) {
+			before = -precision;
+		}
+		return before;
 	}
 
 	/**
