@@ -611,4 +611,23 @@ public class GARSUtils {
 		return label.toString();
 	}
 
+	/**
+	 * Get the next precision value from the precision value and precision
+	 * 
+	 * @param value
+	 *            precision value
+	 * @param precision
+	 *            grid precision
+	 * @return next precision value
+	 */
+	public static double nextPrecision(double value, double precision) {
+		double nextValue = value;
+		if (precision < GridType.FIFTEEN_MINUTE.getPrecision()) {
+			nextValue = precisionAfter(value + 0.5 * precision, precision);
+		} else {
+			nextValue += precision;
+		}
+		return nextValue;
+	}
+
 }

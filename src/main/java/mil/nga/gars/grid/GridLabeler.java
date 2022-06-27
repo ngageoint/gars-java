@@ -188,10 +188,12 @@ public class GridLabeler extends Labeler {
 		tileBounds = tileBounds.toPrecision(precision);
 
 		for (double lon = tileBounds.getMinLongitude(); lon <= tileBounds
-				.getMaxLongitude(); lon += precision) {
+				.getMaxLongitude(); lon = GARSUtils.nextPrecision(lon,
+						precision)) {
 
 			for (double lat = tileBounds.getMinLatitude(); lat <= tileBounds
-					.getMaxLatitude(); lat += precision) {
+					.getMaxLatitude(); lat = GARSUtils.nextPrecision(lat,
+							precision)) {
 
 				Bounds bounds = Bounds.degrees(lon, lat, lon + precision,
 						lat + precision);

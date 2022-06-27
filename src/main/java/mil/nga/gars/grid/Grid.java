@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mil.nga.gars.GARSUtils;
 import mil.nga.gars.color.Color;
 import mil.nga.gars.features.Bounds;
 import mil.nga.gars.features.Line;
@@ -501,12 +502,14 @@ public class Grid implements Comparable<Grid> {
 		tileBounds = tileBounds.toPrecision(precision);
 
 		for (double lon = tileBounds.getMinLongitude(); lon <= tileBounds
-				.getMaxLongitude(); lon += precision) {
+				.getMaxLongitude(); lon = GARSUtils.nextPrecision(lon,
+						precision)) {
 
 			GridType verticalPrecision = GridType.getPrecision(lon);
 
 			for (double lat = tileBounds.getMinLatitude(); lat <= tileBounds
-					.getMaxLatitude(); lat += precision) {
+					.getMaxLatitude(); lat = GARSUtils.nextPrecision(lat,
+							precision)) {
 
 				GridType horizontalPrecision = GridType.getPrecision(lat);
 
