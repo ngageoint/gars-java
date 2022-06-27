@@ -4,8 +4,8 @@ import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import mil.nga.gars.features.Point;
 import mil.nga.gars.grid.GridType;
+import mil.nga.grid.features.Point;
 
 /**
  * Global Area Reference System Coordinate

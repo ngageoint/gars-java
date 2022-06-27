@@ -3,10 +3,11 @@ package mil.nga.gars.grid;
 import java.util.ArrayList;
 import java.util.List;
 
+import mil.nga.gars.GARS;
 import mil.nga.gars.GARSUtils;
-import mil.nga.gars.color.Color;
-import mil.nga.gars.features.Bounds;
-import mil.nga.gars.features.Point;
+import mil.nga.grid.color.Color;
+import mil.nga.grid.features.Bounds;
+import mil.nga.grid.features.Point;
 
 /**
  * GARS grid labeler
@@ -209,7 +210,7 @@ public class GridLabeler extends Labeler {
 					name = GARSUtils.degreeLabel(lon, lat);
 					break;
 				default:
-					name = center.toGARS().coordinate(gridType);
+					name = GARS.from(center).coordinate(gridType);
 				}
 
 				labels.add(new Label(name, center, bounds));

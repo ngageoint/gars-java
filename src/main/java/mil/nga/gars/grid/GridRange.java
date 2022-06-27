@@ -3,7 +3,7 @@ package mil.nga.gars.grid;
 import java.util.Iterator;
 
 import mil.nga.gars.GARS;
-import mil.nga.gars.features.Bounds;
+import mil.nga.grid.features.Bounds;
 
 /**
  * Grid Range

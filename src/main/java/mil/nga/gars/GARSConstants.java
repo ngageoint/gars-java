@@ -1,5 +1,7 @@
 package mil.nga.gars;
 
+import mil.nga.grid.GridConstants;
+
 /**
  * Global Area Reference System Constants
  *
@@ -10,27 +12,22 @@ public class GARSConstants {
 	/**
 	 * Minimum longitude
 	 */
-	public static final double MIN_LON = -180.0;
+	public static final double MIN_LON = GridConstants.MIN_LON;
 
 	/**
 	 * Maximum longitude
 	 */
-	public static final double MAX_LON = 180.0;
+	public static final double MAX_LON = GridConstants.MAX_LON;
 
 	/**
 	 * Minimum latitude
 	 */
-	public static final double MIN_LAT = -90.0;
+	public static final double MIN_LAT = GridConstants.MIN_LAT;
 
 	/**
 	 * Maximum latitude
 	 */
-	public static final double MAX_LAT = 90.0;
-
-	/**
-	 * Half the world distance in either direction
-	 */
-	public static final double WEB_MERCATOR_HALF_WORLD_WIDTH = 20037508.342789244;
+	public static final double MAX_LAT = GridConstants.MAX_LAT;
 
 	/**
 	 * Minimum grid longitude band number
@@ -81,20 +78,5 @@ public class GARSConstants {
 	 * Default keypad (southwest corner)
 	 */
 	public static final int DEFAULT_KEYPAD = 7;
-
-	/**
-	 * Omitted band letter 'I'
-	 */
-	public static final char BAND_LETTER_OMIT_I = 'I';
-
-	/**
-	 * Omitted band letter 'O'
-	 */
-	public static final char BAND_LETTER_OMIT_O = 'O';
-
-	/**
-	 * Max map zoom level
-	 */
-	public static final int MAX_MAP_ZOOM_LEVEL = 21;
 
 }

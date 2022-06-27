@@ -8,10 +8,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import mil.nga.gars.GARSConstants;
-import mil.nga.gars.color.Color;
 import mil.nga.gars.property.GARSProperties;
 import mil.nga.gars.property.PropertyConstants;
+import mil.nga.grid.GridConstants;
+import mil.nga.grid.color.Color;
 
 /**
  * Grids
@@ -369,7 +369,7 @@ public class Grids {
 	 * Create the zoom level grids
 	 */
 	private void createZoomGrids() {
-		for (int zoom = 0; zoom <= GARSConstants.MAX_MAP_ZOOM_LEVEL; zoom++) {
+		for (int zoom = 0; zoom <= GridConstants.MAX_MAP_ZOOM_LEVEL; zoom++) {
 			createZoomGrids(zoom);
 		}
 	}

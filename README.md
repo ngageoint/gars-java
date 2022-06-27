@@ -28,7 +28,7 @@ Point pointMeters = point.toMeters();
 double latitude = 63.98862388;
 double longitude = 29.06755082;
 Point point2 = Point.create(longitude, latitude);
-GARS gars2 = point2.toGARS();
+GARS gars2 = GARS.from(point2);
 String garsCoordinate = gars2.toString();
 String gars30m = gars2.coordinate(GridType.THIRTY_MINUTE);
 String gars15m = gars2.coordinate(GridType.FIFTEEN_MINUTE);
@@ -42,7 +42,7 @@ See [gars-android](https://github.com/ngageoint/gars-android) for a concrete exa
 
 ```java
 
-// GARSTile tile = ...;
+// GridTile tile = ...;
 
 Grids grids = Grids.create();
 
@@ -51,9 +51,9 @@ if (zoomGrids.hasGrids()) {
 
   for (Grid grid : zoomGrids) {
 
-    List<Line> lines = grid.getLines(tile);
+    List<GridLine> lines = grid.getLines(tile);
     if (lines != null) {
-      for (Line line : lines) {
+      for (GridLine line : lines) {
         Pixel pixel1 = line.getPoint1().getPixel(tile);
         Pixel pixel2 = line.getPoint2().getPixel(tile);
         // Draw line
@@ -96,3 +96,7 @@ Pull from the [Maven Central Repository](http://search.maven.org/#artifactdetail
 Build this repository using Eclipse and/or Maven:
 
     mvn clean install
+
+### Remote Dependencies ###
+
+* [Grid Java](https://github.com/ngageoint/grid-java) (The MIT License (MIT)) - Grid Library

@@ -8,9 +8,9 @@ import java.text.ParseException;
 
 import org.junit.Test;
 
-import mil.nga.gars.features.Point;
 import mil.nga.gars.grid.GridRange;
 import mil.nga.gars.grid.GridType;
+import mil.nga.grid.features.Point;
 
 /**
  * GARS Test
@@ -381,7 +381,7 @@ public class GARSTest {
 	private void testCoordinate(Point point, String value)
 			throws ParseException {
 
-		GARS gars = point.toGARS();
+		GARS gars = GARS.from(point);
 		assertEquals(value, gars.toString());
 		assertEquals(value, gars.coordinate());
 		assertEquals(value, gars.coordinate(GridType.FIVE_MINUTE));

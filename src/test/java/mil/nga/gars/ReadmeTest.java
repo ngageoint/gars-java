@@ -5,16 +5,16 @@ import java.util.List;
 
 import org.junit.Test;
 
-import mil.nga.gars.features.Line;
-import mil.nga.gars.features.Point;
+import mil.nga.gars.features.GridLine;
 import mil.nga.gars.grid.Grid;
 import mil.nga.gars.grid.GridType;
 import mil.nga.gars.grid.Grids;
 import mil.nga.gars.grid.Label;
 import mil.nga.gars.grid.ZoomGrids;
-import mil.nga.gars.tile.GARSTile;
-import mil.nga.gars.tile.Pixel;
-import mil.nga.gars.tile.PixelRange;
+import mil.nga.grid.features.Point;
+import mil.nga.grid.tile.GridTile;
+import mil.nga.grid.tile.Pixel;
+import mil.nga.grid.tile.PixelRange;
 
 /**
  * README example tests
@@ -39,7 +39,7 @@ public class ReadmeTest {
 		double latitude = 63.98862388;
 		double longitude = 29.06755082;
 		Point point2 = Point.create(longitude, latitude);
-		GARS gars2 = point2.toGARS();
+		GARS gars2 = GARS.from(point2);
 		String garsCoordinate = gars2.toString();
 		String gars30m = gars2.coordinate(GridType.THIRTY_MINUTE);
 		String gars15m = gars2.coordinate(GridType.FIFTEEN_MINUTE);
@@ -52,7 +52,7 @@ public class ReadmeTest {
 	 */
 	@Test
 	public void testDrawTile() {
-		testDrawTile(GARSTile.create(512, 512, 8, 12, 5));
+		testDrawTile(GridTile.create(512, 512, 8, 12, 5));
 	}
 
 	/**
@@ -61,9 +61,9 @@ public class ReadmeTest {
 	 * @param tile
 	 *            GARS tile
 	 */
-	private static void testDrawTile(GARSTile tile) {
+	private static void testDrawTile(GridTile tile) {
 
-		// GARSTile tile = ...;
+		// GridTile tile = ...;
 
 		Grids grids = Grids.create();
 
@@ -72,9 +72,9 @@ public class ReadmeTest {
 
 			for (Grid grid : zoomGrids) {
 
-				List<Line> lines = grid.getLines(tile);
+				List<GridLine> lines = grid.getLines(tile);
 				if (lines != null) {
-					for (Line line : lines) {
+					for (GridLine line : lines) {
 						Pixel pixel1 = line.getPoint1().getPixel(tile);
 						Pixel pixel2 = line.getPoint2().getPixel(tile);
 						// Draw line

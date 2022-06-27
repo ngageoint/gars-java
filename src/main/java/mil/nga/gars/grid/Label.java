@@ -1,7 +1,7 @@
 package mil.nga.gars.grid;
 
-import mil.nga.gars.features.Bounds;
-import mil.nga.gars.features.Point;
+import mil.nga.grid.features.Bounds;
+import mil.nga.grid.features.Point;
 
 /**
  * GARS Label

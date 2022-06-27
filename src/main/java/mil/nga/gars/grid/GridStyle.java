@@ -1,6 +1,6 @@
 package mil.nga.gars.grid;
 
-import mil.nga.gars.color.Color;
+import mil.nga.grid.color.Color;
 
 /**
  * Grid Line Style

@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import mil.nga.gars.GARSUtils;
-import mil.nga.gars.color.Color;
-import mil.nga.gars.features.Bounds;
-import mil.nga.gars.features.Line;
-import mil.nga.gars.features.Point;
+import mil.nga.gars.features.GridLine;
 import mil.nga.gars.property.GARSProperties;
 import mil.nga.gars.property.PropertyConstants;
-import mil.nga.gars.tile.GARSTile;
+import mil.nga.grid.color.Color;
+import mil.nga.grid.features.Bounds;
+import mil.nga.grid.features.Point;
+import mil.nga.grid.tile.GridTile;
 
 /**
  * Grid
@@ -465,7 +465,7 @@ public class Grid implements Comparable<Grid> {
 	 *            tile
 	 * @return lines
 	 */
-	public List<Line> getLines(GARSTile tile) {
+	public List<GridLine> getLines(GridTile tile) {
 		return getLines(tile.getZoom(), tile.getBounds());
 	}
 
@@ -478,8 +478,8 @@ public class Grid implements Comparable<Grid> {
 	 *            tile bounds
 	 * @return lines
 	 */
-	public List<Line> getLines(int zoom, Bounds tileBounds) {
-		List<Line> lines = null;
+	public List<GridLine> getLines(int zoom, Bounds tileBounds) {
+		List<GridLine> lines = null;
 		if (isLinesWithin(zoom)) {
 			lines = getLines(tileBounds);
 		}
@@ -493,9 +493,9 @@ public class Grid implements Comparable<Grid> {
 	 *            tile bounds
 	 * @return lines
 	 */
-	public List<Line> getLines(Bounds tileBounds) {
+	public List<GridLine> getLines(Bounds tileBounds) {
 
-		List<Line> lines = new ArrayList<>();
+		List<GridLine> lines = new ArrayList<>();
 
 		double precision = getPrecision();
 
@@ -518,10 +518,10 @@ public class Grid implements Comparable<Grid> {
 				Point southeast = Point.create(lon + precision, lat);
 
 				// Vertical line
-				lines.add(Line.line(southwest, northwest, verticalPrecision));
+				lines.add(GridLine.line(southwest, northwest, verticalPrecision));
 
 				// Horizontal line
-				lines.add(Line.line(southwest, southeast, horizontalPrecision));
+				lines.add(GridLine.line(southwest, southeast, horizontalPrecision));
 
 			}
 		}
@@ -536,7 +536,7 @@ public class Grid implements Comparable<Grid> {
 	 *            tile
 	 * @return labels
 	 */
-	public List<Label> getLabels(GARSTile tile) {
+	public List<Label> getLabels(GridTile tile) {
 		return getLabels(tile.getZoom(), tile.getBounds());
 	}
 
