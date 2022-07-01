@@ -27,7 +27,7 @@ Point pointMeters = point.toMeters();
 
 double latitude = 63.98862388;
 double longitude = 29.06755082;
-Point point2 = Point.create(longitude, latitude);
+Point point2 = Point.point(longitude, latitude);
 GARS gars2 = GARS.from(point2);
 String garsCoordinate = gars2.toString();
 String gars30m = gars2.coordinate(GridType.THIRTY_MINUTE);
@@ -60,9 +60,9 @@ if (zoomGrids.hasGrids()) {
       }
     }
 
-    List<Label> labels = grid.getLabels(tile);
+    List<GridLabel> labels = grid.getLabels(tile);
     if (labels != null) {
-      for (Label label : labels) {
+      for (GridLabel label : labels) {
         PixelRange pixelRange = label.getBounds()
             .getPixelRange(tile);
         Pixel centerPixel = label.getCenter().getPixel(tile);

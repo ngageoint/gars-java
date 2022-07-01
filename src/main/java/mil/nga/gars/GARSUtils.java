@@ -342,9 +342,11 @@ public class GARSUtils {
 	public static String degreeLabel(double longitude, double latitude) {
 		StringBuilder label = new StringBuilder();
 		label.append(Math.abs((int) longitude));
-		label.append(longitude < 0 ? "W" : "E");
+		label.append(longitude < 0 ? GridConstants.WEST_CHAR
+				: GridConstants.EAST_CHAR);
 		label.append(Math.abs((int) latitude));
-		label.append(latitude < 0 ? "S" : "N");
+		label.append(latitude < 0 ? GridConstants.SOUTH_CHAR
+				: GridConstants.NORTH_CHAR);
 		return label.toString();
 	}
 

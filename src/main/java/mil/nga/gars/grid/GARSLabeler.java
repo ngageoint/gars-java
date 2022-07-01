@@ -1,39 +1,26 @@
 package mil.nga.gars.grid;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import mil.nga.gars.property.GARSProperties;
-import mil.nga.grid.Labeler;
+import mil.nga.gars.GARS;
+import mil.nga.gars.GARSUtils;
 import mil.nga.grid.color.Color;
 import mil.nga.grid.features.Bounds;
-import mil.nga.grid.property.PropertyConstants;
+import mil.nga.grid.features.Point;
 
 /**
- * Grid Labeler
+ * GARS grid labeler
  * 
  * @author osbornb
  */
-public abstract class GridLabeler extends Labeler {
-
-	/**
-	 * Default text size
-	 */
-	public static final double DEFAULT_TEXT_SIZE = GARSProperties.getInstance()
-			.getDoubleProperty(PropertyConstants.LABELER,
-					PropertyConstants.TEXT_SIZE);
-
-	/**
-	 * Default buffer size
-	 */
-	public static final double DEFAULT_BUFFER = GARSProperties.getInstance()
-			.getDoubleProperty(PropertyConstants.LABELER,
-					PropertyConstants.BUFFER);
+public class GARSLabeler extends GridLabeler {
 
 	/**
 	 * Default Constructor
 	 */
-	public GridLabeler() {
-		super(true, 0, null, Color.black(), DEFAULT_TEXT_SIZE, DEFAULT_BUFFER);
+	public GARSLabeler() {
+		super();
 	}
 
 	/**
@@ -44,8 +31,8 @@ public abstract class GridLabeler extends Labeler {
 	 * @param color
 	 *            label color
 	 */
-	public GridLabeler(int minZoom, Color color) {
-		this(minZoom, color, DEFAULT_TEXT_SIZE);
+	public GARSLabeler(int minZoom, Color color) {
+		super(minZoom, color);
 	}
 
 	/**
@@ -58,8 +45,8 @@ public abstract class GridLabeler extends Labeler {
 	 * @param textSize
 	 *            label text size
 	 */
-	public GridLabeler(int minZoom, Color color, double textSize) {
-		super(minZoom, color, textSize, DEFAULT_BUFFER);
+	public GARSLabeler(int minZoom, Color color, double textSize) {
+		super(minZoom, color, textSize);
 	}
 
 	/**
@@ -75,9 +62,9 @@ public abstract class GridLabeler extends Labeler {
 	 *            grid edge buffer (greater than or equal to 0.0 and less than
 	 *            0.5)
 	 */
-	public GridLabeler(int minZoom, Color color, double textSize,
+	public GARSLabeler(int minZoom, Color color, double textSize,
 			double buffer) {
-		super(minZoom, null, color, textSize, buffer);
+		super(minZoom, color, textSize, buffer);
 	}
 
 	/**
@@ -90,8 +77,8 @@ public abstract class GridLabeler extends Labeler {
 	 * @param color
 	 *            label color
 	 */
-	public GridLabeler(int minZoom, Integer maxZoom, Color color) {
-		this(minZoom, maxZoom, color, DEFAULT_TEXT_SIZE);
+	public GARSLabeler(int minZoom, Integer maxZoom, Color color) {
+		super(minZoom, maxZoom, color);
 	}
 
 	/**
@@ -106,9 +93,9 @@ public abstract class GridLabeler extends Labeler {
 	 * @param textSize
 	 *            label text size
 	 */
-	public GridLabeler(int minZoom, Integer maxZoom, Color color,
+	public GARSLabeler(int minZoom, Integer maxZoom, Color color,
 			double textSize) {
-		super(minZoom, maxZoom, color, textSize, DEFAULT_BUFFER);
+		super(minZoom, maxZoom, color, textSize);
 	}
 
 	/**
@@ -126,9 +113,9 @@ public abstract class GridLabeler extends Labeler {
 	 *            grid edge buffer (greater than or equal to 0.0 and less than
 	 *            0.5)
 	 */
-	public GridLabeler(int minZoom, Integer maxZoom, Color color,
+	public GARSLabeler(int minZoom, Integer maxZoom, Color color,
 			double textSize, double buffer) {
-		super(true, minZoom, maxZoom, color, textSize, buffer);
+		super(minZoom, maxZoom, color, textSize, buffer);
 	}
 
 	/**
@@ -143,9 +130,9 @@ public abstract class GridLabeler extends Labeler {
 	 * @param color
 	 *            label color
 	 */
-	public GridLabeler(boolean enabled, int minZoom, Integer maxZoom,
+	public GARSLabeler(boolean enabled, int minZoom, Integer maxZoom,
 			Color color) {
-		this(enabled, minZoom, maxZoom, color, DEFAULT_TEXT_SIZE);
+		super(enabled, minZoom, maxZoom, color);
 	}
 
 	/**
@@ -162,9 +149,9 @@ public abstract class GridLabeler extends Labeler {
 	 * @param textSize
 	 *            label text size
 	 */
-	public GridLabeler(boolean enabled, int minZoom, Integer maxZoom,
+	public GARSLabeler(boolean enabled, int minZoom, Integer maxZoom,
 			Color color, double textSize) {
-		super(enabled, minZoom, maxZoom, color, textSize, DEFAULT_BUFFER);
+		super(enabled, minZoom, maxZoom, color, textSize);
 	}
 
 	/**
@@ -184,21 +171,56 @@ public abstract class GridLabeler extends Labeler {
 	 *            grid edge buffer (greater than or equal to 0.0 and less than
 	 *            0.5)
 	 */
-	public GridLabeler(boolean enabled, int minZoom, Integer maxZoom,
+	public GARSLabeler(boolean enabled, int minZoom, Integer maxZoom,
 			Color color, double textSize, double buffer) {
 		super(enabled, minZoom, maxZoom, color, textSize, buffer);
 	}
 
 	/**
-	 * Get labels for the bounds
-	 * 
-	 * @param tileBounds
-	 *            tile bounds
-	 * @param gridType
-	 *            grid type
-	 * @return labels
+	 * {@inheritDoc}
 	 */
-	public abstract List<GridLabel> getLabels(Bounds tileBounds,
-			GridType gridType);
+	@Override
+	public List<GridLabel> getLabels(Bounds tileBounds, GridType gridType) {
+
+		List<GridLabel> labels = new ArrayList<>();
+
+		double precision = gridType.getPrecision();
+
+		tileBounds = tileBounds.toPrecision(precision);
+
+		for (double lon = tileBounds.getMinLongitude(); lon <= tileBounds
+				.getMaxLongitude(); lon = GARSUtils.nextPrecision(lon,
+						precision)) {
+
+			for (double lat = tileBounds.getMinLatitude(); lat <= tileBounds
+					.getMaxLatitude(); lat = GARSUtils.nextPrecision(lat,
+							precision)) {
+
+				Bounds bounds = Bounds.degrees(lon, lat, lon + precision,
+						lat + precision);
+				Point center = bounds.getCenter();
+				GARS coordinate = GARS.from(center);
+
+				String name = null;
+
+				switch (gridType) {
+				case TWENTY_DEGREE:
+				case TEN_DEGREE:
+				case FIVE_DEGREE:
+				case ONE_DEGREE:
+					name = GARSUtils.degreeLabel(lon, lat);
+					break;
+				default:
+					name = coordinate.coordinate(gridType);
+				}
+
+				labels.add(
+						new GridLabel(name, center, bounds, gridType, coordinate));
+
+			}
+		}
+
+		return labels;
+	}
 
 }

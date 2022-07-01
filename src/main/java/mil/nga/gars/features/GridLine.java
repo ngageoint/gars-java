@@ -45,6 +45,17 @@ public class GridLine extends Line {
 	}
 
 	/**
+	 * Copy a line
+	 * 
+	 * @param line
+	 *            line to copy
+	 * @return line
+	 */
+	public static GridLine line(GridLine line) {
+		return new GridLine(line);
+	}
+
+	/**
 	 * Constructor
 	 * 
 	 * @param point1

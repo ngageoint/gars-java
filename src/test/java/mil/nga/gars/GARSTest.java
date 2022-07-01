@@ -188,7 +188,7 @@ public class GARSTest {
 		point = gars.toPoint();
 		assertEquals(-177.3333333, point.getLongitude(), 0.000001);
 		assertEquals(-87.0, point.getLatitude(), 0);
-		gars2 = GARS.from(Point.create(point.getLongitude() + 0.000001,
+		gars2 = GARS.from(Point.point(point.getLongitude() + 0.000001,
 				point.getLatitude()));
 		assertEquals(gars, gars2);
 		assertEquals(garsValue, gars2.coordinate());
@@ -203,7 +203,7 @@ public class GARSTest {
 		point = gars.toPoint();
 		assertEquals(-177.1666667, point.getLongitude(), 0.000001);
 		assertEquals(-86.6666667, point.getLatitude(), 0.000001);
-		gars2 = GARS.from(Point.create(point.getLongitude(),
+		gars2 = GARS.from(Point.point(point.getLongitude(),
 				point.getLatitude() + 0.000001));
 		assertEquals(gars, gars2);
 		assertEquals(garsValue, gars2.coordinate());
@@ -268,7 +268,7 @@ public class GARSTest {
 		testCoordinateMeters(-8738580.027271975, 4439106.787250587, gars);
 
 		gars = "204LQ27";
-		testCoordinate(Point.create(-78.25, 37.25), gars);
+		testCoordinate(Point.point(-78.25, 37.25), gars);
 		testCoordinateMeters(-8710750.154573657, 4474011.088229478, gars);
 
 		gars = "204LQ25";
@@ -344,7 +344,7 @@ public class GARSTest {
 	 */
 	private void testCoordinate(double longitude, double latitude, String value)
 			throws ParseException {
-		Point point = Point.create(longitude, latitude);
+		Point point = Point.point(longitude, latitude);
 		testCoordinate(point, value);
 		testCoordinate(point.toMeters(), value);
 	}
