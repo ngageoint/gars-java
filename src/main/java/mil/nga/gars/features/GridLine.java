@@ -45,6 +45,30 @@ public class GridLine extends Line {
 	}
 
 	/**
+	 * Create a line
+	 * 
+	 * @param line
+	 *            line to copy
+	 * @return line
+	 */
+	public static GridLine line(Line line) {
+		return new GridLine(line);
+	}
+
+	/**
+	 * Create a line
+	 * 
+	 * @param line
+	 *            line to copy
+	 * @param gridType
+	 *            line grid type
+	 * @return line
+	 */
+	public static GridLine line(Line line, GridType gridType) {
+		return new GridLine(line, gridType);
+	}
+
+	/**
 	 * Copy a line
 	 * 
 	 * @param line
@@ -83,13 +107,36 @@ public class GridLine extends Line {
 	}
 
 	/**
+	 * Constructor
+	 * 
+	 * @param line
+	 *            line to copy
+	 */
+	public GridLine(Line line) {
+		super(line);
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param line
+	 *            line to copy
+	 * @param gridType
+	 *            line grid type
+	 */
+	public GridLine(Line line, GridType gridType) {
+		this(line);
+		this.gridType = gridType;
+	}
+
+	/**
 	 * Copy Constructor
 	 * 
 	 * @param line
 	 *            line to copy
 	 */
 	public GridLine(GridLine line) {
-		this(line.getPoint1(), line.getPoint2(), line.getGridType());
+		this(line, line.getGridType());
 	}
 
 	/**
