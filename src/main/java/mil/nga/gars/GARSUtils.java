@@ -339,7 +339,7 @@ public class GARSUtils {
 	 *            latitude
 	 * @return degree label
 	 */
-	public static String degreeLabel(double longitude, double latitude) {
+	public static String getDegreeLabel(double longitude, double latitude) {
 		StringBuilder label = new StringBuilder();
 		label.append(Math.abs((int) longitude));
 		label.append(longitude < 0 ? GridConstants.WEST_CHAR

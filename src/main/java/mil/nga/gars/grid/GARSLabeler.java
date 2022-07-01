@@ -208,7 +208,7 @@ public class GARSLabeler extends GridLabeler {
 				case TEN_DEGREE:
 				case FIVE_DEGREE:
 				case ONE_DEGREE:
-					name = GARSUtils.degreeLabel(lon, lat);
+					name = GARSUtils.getDegreeLabel(lon, lat);
 					break;
 				default:
 					name = coordinate.coordinate(gridType);
