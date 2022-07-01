@@ -59,7 +59,7 @@ public class ReadmeTest {
 	 * Test draw tile template logic
 	 * 
 	 * @param tile
-	 *            GARS tile
+	 *            grid tile
 	 */
 	private static void testDrawTile(GridTile tile) {
 
