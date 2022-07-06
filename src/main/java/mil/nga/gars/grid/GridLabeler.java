@@ -2,9 +2,9 @@ package mil.nga.gars.grid;
 
 import java.util.List;
 
+import mil.nga.color.Color;
 import mil.nga.gars.property.GARSProperties;
 import mil.nga.grid.Labeler;
-import mil.nga.grid.color.Color;
 import mil.nga.grid.features.Bounds;
 import mil.nga.grid.property.PropertyConstants;
 

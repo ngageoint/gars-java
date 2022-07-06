@@ -7,10 +7,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import mil.nga.color.Color;
 import mil.nga.gars.property.GARSProperties;
 import mil.nga.grid.BaseGrids;
 import mil.nga.grid.GridStyle;
-import mil.nga.grid.color.Color;
 import mil.nga.grid.property.PropertyConstants;
 
 /**

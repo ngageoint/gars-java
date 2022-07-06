@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mil.nga.color.Color;
 import mil.nga.gars.GARSUtils;
 import mil.nga.gars.features.GridLine;
 import mil.nga.gars.property.GARSProperties;
 import mil.nga.grid.BaseGrid;
 import mil.nga.grid.GridStyle;
-import mil.nga.grid.color.Color;
 import mil.nga.grid.features.Bounds;
 import mil.nga.grid.features.Point;
 import mil.nga.grid.property.PropertyConstants;

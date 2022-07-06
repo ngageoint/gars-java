@@ -3,9 +3,9 @@ package mil.nga.gars.grid;
 import java.util.ArrayList;
 import java.util.List;
 
+import mil.nga.color.Color;
 import mil.nga.gars.GARS;
 import mil.nga.gars.GARSUtils;
-import mil.nga.grid.color.Color;
 import mil.nga.grid.features.Bounds;
 import mil.nga.grid.features.Point;
 
@@ -214,8 +214,8 @@ public class GARSLabeler extends GridLabeler {
 					name = coordinate.coordinate(gridType);
 				}
 
-				labels.add(
-						new GridLabel(name, center, bounds, gridType, coordinate));
+				labels.add(new GridLabel(name, center, bounds, gridType,
+						coordinate));
 
 			}
 		}
