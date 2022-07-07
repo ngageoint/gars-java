@@ -198,7 +198,7 @@ public class GARSLabeler extends GridLabeler {
 
 				Bounds bounds = Bounds.degrees(lon, lat, lon + precision,
 						lat + precision);
-				Point center = bounds.getCenter();
+				Point center = bounds.getCentroid();
 				GARS coordinate = GARS.from(center);
 
 				String name = null;
