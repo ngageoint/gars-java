@@ -226,11 +226,11 @@ public class GARSTest {
 		assertFalse(GARS.isGARS("000AG3"));
 		assertFalse(GARS.isGARS("721AG3"));
 		assertFalse(GARS.isGARS("006RA3"));
-		assertFalse(GARS.isGARS("006RA3"));
+		assertFalse(GARS.isGARS("006ZZ3"));
 		assertFalse(GARS.isGARS("000AG39"));
 		assertFalse(GARS.isGARS("721AG39"));
 		assertFalse(GARS.isGARS("006RA39"));
-		assertFalse(GARS.isGARS("006RA39"));
+		assertFalse(GARS.isGARS("006ZZ39"));
 		assertFalse(GARS.isGARS("006AG09"));
 		assertFalse(GARS.isGARS("006AG59"));
 		assertFalse(GARS.isGARS("006AG30"));

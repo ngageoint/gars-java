@@ -4,9 +4,11 @@ Adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
-## 1.1.0 (TBD)
+## [1.1.0](https://github.com/ngageoint/gars-java/releases/tag/1.1.0) (09-22-2022)
 
-* TBD
+* grid version 1.1.0
+* Default label color change for degree and five minute grids
+* GARS pattern update to match "end of line"
 
 ## [1.0.0](https://github.com/ngageoint/gars-java/releases/tag/1.0.0) (07-08-2022)
 

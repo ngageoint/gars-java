@@ -18,28 +18,28 @@ public class GARS {
 	 * GARS string pattern
 	 */
 	private static final Pattern garsPattern = Pattern.compile(
-			"^(\\d{3})([A-HJ-NP-Z]{2})(?:([1-4])([1-9])?)?",
+			"^(\\d{3})([A-HJ-NP-Z]{2})(?:([1-4])([1-9])?)?$",
 			Pattern.CASE_INSENSITIVE);
 
 	/**
 	 * Longitudinal band number
 	 */
-	private int longitude;
+	private final int longitude;
 
 	/**
 	 * Latitudinal band letters
 	 */
-	private String latitude;
+	private final String latitude;
 
 	/**
 	 * 15 minute quadrant
 	 */
-	private int quadrant;
+	private final int quadrant;
 
 	/**
 	 * 5 minute keypad
 	 */
-	private int keypad;
+	private final int keypad;
 
 	/**
 	 * Create, default southwest corner quadrant
