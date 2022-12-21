@@ -11,6 +11,7 @@ import org.junit.Test;
 import mil.nga.gars.grid.GridRange;
 import mil.nga.gars.grid.GridType;
 import mil.nga.grid.features.Point;
+import mil.nga.sf.util.GeometryConstants;
 
 /**
  * GARS Test
@@ -278,6 +279,100 @@ public class GARSTest {
 		gars = "204LQ23";
 		testCoordinate(-78.08333333, 37.41666667, gars);
 		testCoordinateMeters(-8692196.905737048, 4497344.980476594, gars);
+
+	}
+
+	/**
+	 * Test parsing point bounds
+	 */
+	@Test
+	public void testPointBounds() {
+
+		// Max latitude tests
+
+		String gars = "462RA49";
+		String gars2 = "462QZ26";
+		double longitude = 50.920338;
+		double latitudeBelow = 89.9;
+		double latitudeAbove = 100.0;
+
+		Point point = Point.degrees(longitude, GARSConstants.MAX_LAT);
+		assertEquals(gars, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeBelow);
+		assertEquals(gars2, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeAbove);
+		assertEquals(gars, GARS.from(point).coordinate());
+
+		// Max latitude and max longitude tests
+
+		longitude += (2 * GeometryConstants.WGS84_HALF_WORLD_LON_WIDTH);
+
+		point = Point.degrees(longitude, GARSConstants.MAX_LAT);
+		assertEquals(gars, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeBelow);
+		assertEquals(gars2, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeAbove);
+		assertEquals(gars, GARS.from(point).coordinate());
+
+		// Max latitude and min longitude tests
+
+		longitude -= (4 * GeometryConstants.WGS84_HALF_WORLD_LON_WIDTH);
+
+		point = Point.degrees(longitude, GARSConstants.MAX_LAT);
+		assertEquals(gars, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeBelow);
+		assertEquals(gars2, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeAbove);
+		assertEquals(gars, GARS.from(point).coordinate());
+
+		// Min latitude tests
+
+		gars = "617AA49";
+		gars2 = "617AB49";
+		longitude = 128.4525;
+		latitudeAbove = -89.5;
+		latitudeBelow = -100.0;
+
+		point = Point.degrees(longitude, GARSConstants.MIN_LAT);
+		assertEquals(gars, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeAbove);
+		assertEquals(gars2, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeBelow);
+		assertEquals(gars, GARS.from(point).coordinate());
+
+		// Min latitude and max longitude tests
+
+		longitude += (2 * GeometryConstants.WGS84_HALF_WORLD_LON_WIDTH);
+
+		point = Point.degrees(longitude, GARSConstants.MIN_LAT);
+		assertEquals(gars, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeAbove);
+		assertEquals(gars2, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeBelow);
+		assertEquals(gars, GARS.from(point).coordinate());
+
+		// Min latitude and min longitude tests
+
+		longitude -= (4 * GeometryConstants.WGS84_HALF_WORLD_LON_WIDTH);
+
+		point = Point.degrees(longitude, GARSConstants.MIN_LAT);
+		assertEquals(gars, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeAbove);
+		assertEquals(gars2, GARS.from(point).coordinate());
+
+		point = Point.degrees(longitude, latitudeBelow);
+		assertEquals(gars, GARS.from(point).coordinate());
 
 	}
 

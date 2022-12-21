@@ -6,7 +6,7 @@ Adheres to [Semantic Versioning](http://semver.org/).
 
 ## 1.1.1 (TBD)
 
-* TBD
+* Point to GARS conversion latitude min/max bounding and longitude normalization
 
 ## [1.1.0](https://github.com/ngageoint/gars-java/releases/tag/1.1.0) (09-22-2022)
 

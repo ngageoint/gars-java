@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import mil.nga.gars.grid.GridType;
 import mil.nga.grid.features.Point;
+import mil.nga.sf.util.GeometryUtils;
 
 /**
  * Global Area Reference System Coordinate
@@ -206,7 +207,7 @@ public class GARS {
 		lat += GARSUtils.keypadRow(keypad)
 				* GridType.FIVE_MINUTE.getPrecision();
 
-		return new Point(lon, lat);
+		return Point.degrees(lon, lat);
 	}
 
 	/**
@@ -302,23 +303,21 @@ public class GARS {
 	 * @return GARS
 	 */
 	public static GARS from(Point point) {
-		point = point.toDegrees();
-		return from(point.getLongitude(), point.getLatitude());
-	}
 
-	/**
-	 * Convert the coordinate to GARS
-	 *
-	 * @param longitude
-	 *            longitude
-	 * @param latitude
-	 *            latitude
-	 * @return GARS
-	 */
-	public static GARS from(double longitude, double latitude) {
+		point = point.copy().toDegrees();
 
-		double lon = GARSUtils.getLongitudeDecimalBand(longitude);
-		double lat = GARSUtils.getLatitudeDecimalBandValue(latitude);
+		// Bound the latitude if needed
+		if (point.getLatitude() < GARSConstants.MIN_LAT) {
+			point.setLatitude(GARSConstants.MIN_LAT);
+		} else if (point.getLatitude() > GARSConstants.MAX_LAT) {
+			point.setLatitude(GARSConstants.MAX_LAT);
+		}
+
+		// Normalize the longitude if needed
+		GeometryUtils.normalizeWGS84(point);
+
+		double lon = GARSUtils.getLongitudeDecimalBand(point.getLongitude());
+		double lat = GARSUtils.getLatitudeDecimalBandValue(point.getLatitude());
 
 		int lonInt = (int) lon;
 		int latInt = (int) lat;
@@ -345,6 +344,19 @@ public class GARS {
 		int keypad = GARSUtils.keypad(keypadColumn, keypadRow);
 
 		return GARS.create(lonInt, latBand, quadrant, keypad);
+	}
+
+	/**
+	 * Convert the coordinate to GARS
+	 *
+	 * @param longitude
+	 *            longitude
+	 * @param latitude
+	 *            latitude
+	 * @return GARS
+	 */
+	public static GARS from(double longitude, double latitude) {
+		return from(Point.degrees(longitude, latitude));
 	}
 
 	/**
