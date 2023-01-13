@@ -81,12 +81,12 @@ Default grid properties including zoom ranges, styles, and labelers are defined 
 
 ### Installation ###
 
-Pull from the [Maven Central Repository](http://search.maven.org/#artifactdetails|mil.nga|gars|1.1.0|jar) (JAR, POM, Source, Javadoc)
+Pull from the [Maven Central Repository](http://search.maven.org/#artifactdetails|mil.nga|gars|1.1.1|jar) (JAR, POM, Source, Javadoc)
 
     <dependency>
         <groupId>mil.nga</groupId>
         <artifactId>gars</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.1</version>
     </dependency>
 
 ### Build ###
