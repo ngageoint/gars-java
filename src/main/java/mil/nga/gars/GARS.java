@@ -315,31 +315,34 @@ public class GARS {
 
 		// Normalize the longitude if needed
 		GeometryUtils.normalizeWGS84(point);
+		double longitude = point.getLongitude();
+		if (longitude >= GARSConstants.MAX_LON) {
+			// 180 is the same meridian as -180, in band 001
+			longitude -= 360.0;
+		}
 
-		double lon = GARSUtils.getLongitudeDecimalBand(point.getLongitude());
-		double lat = GARSUtils.getLatitudeDecimalBandValue(point.getLatitude());
+		// Index of the 5 minute cell, counted from 180 W and 90 S. Multiply
+		// before adding the offset so that values on a cell boundary land in
+		// the cell they start (scaling the band fractions in steps let
+		// rounding put them in the cell below or to the left). The top row
+		// includes latitude 90.
+		int lonIndex = (int) Math.floor(longitude * 12.0) + 180 * 12;
+		int latIndex = (int) Math.floor(point.getLatitude() * 12.0) + 90 * 12;
+		lonIndex = Math.max(0, Math.min(lonIndex, 360 * 12 - 1));
+		latIndex = Math.max(0, Math.min(latIndex, 180 * 12 - 1));
 
-		int lonInt = (int) lon;
-		int latInt = (int) lat;
+		int lonInt = lonIndex / 6 + 1;
+		int latInt = latIndex / 6 + 1;
 
 		String latBand = GARSUtils.bandLetters(latInt);
 
-		double lonDecimal = lon - lonInt;
-		double latDecimal = lat - latInt;
-
-		double quadrantColumn = lonDecimal * 2.0;
-		double quadrantRow = latDecimal * 2.0;
-
-		int quadrantColumnInt = (int) quadrantColumn;
-		int quadrantRowInt = (int) quadrantRow;
+		int quadrantColumnInt = (lonIndex % 6) / 3;
+		int quadrantRowInt = (latIndex % 6) / 3;
 
 		int quadrant = GARSUtils.quadrant(quadrantColumnInt, quadrantRowInt);
 
-		lonDecimal = quadrantColumn - quadrantColumnInt;
-		latDecimal = quadrantRow - quadrantRowInt;
-
-		int keypadColumn = (int) (lonDecimal * 3.0);
-		int keypadRow = (int) (latDecimal * 3.0);
+		int keypadColumn = lonIndex % 3;
+		int keypadRow = latIndex % 3;
 
 		int keypad = GARSUtils.keypad(keypadColumn, keypadRow);
 

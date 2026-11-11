@@ -290,7 +290,9 @@ public class GARSTest {
 
 		// Max latitude tests
 
-		String gars = "462RA49";
+		// Latitude 90 is in the top band, QZ (there is no band RA, and
+		// parse() rejects it)
+		String gars = "462QZ23";
 		String gars2 = "462QZ26";
 		double longitude = 50.920338;
 		double latitudeBelow = 89.9;
@@ -494,6 +496,47 @@ public class GARSTest {
 				gars.coordinate(GridType.THIRTY_MINUTE));
 		assertEquals(value.substring(0, 6),
 				gars.coordinate(GridType.FIFTEEN_MINUTE));
+
+	}
+
+	/**
+	 * Test points on the antimeridian, at the north pole, and on whole
+	 * minute cell boundaries
+	 * 
+	 * @throws ParseException
+	 *             upon failure to parse
+	 */
+	@Test
+	public void testCellBoundaries() throws ParseException {
+
+		// 180 is the same meridian as -180; latitude 90 is in the top row.
+		// These used to give 721HN37 and 361RA37, which parse() rejects.
+		assertEquals("001HN37", GARS.from(180, 0).coordinate());
+		assertEquals("361QZ11", GARS.from(0, 90).coordinate());
+		assertEquals("001QZ11", GARS.from(180, 90).coordinate());
+		assertEquals("720QZ23", GARS.from(179.9999999, 89.9999999).coordinate());
+		GARS.parse(GARS.from(180, 0).coordinate());
+		GARS.parse(GARS.from(0, 90).coordinate());
+
+		// A point on a 5 minute boundary is in the cell it starts
+		// (10 05' E 10 05' N used to give 381JJ38, the cell to the south)
+		assertEquals("381JJ35", GARS.from(10 + 5 / 60.0, 10 + 5 / 60.0).coordinate());
+		assertEquals("340GR23",
+				GARS.from(-(10 + 5 / 60.0), -(10 + 5 / 60.0)).coordinate());
+
+		for (int i = 0; i < 360 * 12; i += 7) {
+			for (int j = 0; j < 180 * 12; j += 5) {
+				int lonMinutes = i * 5 - 180 * 60;
+				int latMinutes = j * 5 - 90 * 60;
+				double lon = Math.signum(lonMinutes) * (Math.abs(lonMinutes) / 60
+						+ (Math.abs(lonMinutes) % 60) / 60.0);
+				double lat = Math.signum(latMinutes) * (Math.abs(latMinutes) / 60
+						+ (Math.abs(latMinutes) % 60) / 60.0);
+				Point southwest = GARS.from(lon, lat).toPoint();
+				assertEquals(lon, southwest.getLongitude(), 1e-9);
+				assertEquals(lat, southwest.getLatitude(), 1e-9);
+			}
+		}
 
 	}
 
